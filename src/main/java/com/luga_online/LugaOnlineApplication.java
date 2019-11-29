@@ -1,6 +1,6 @@
-package com.luga_omline;
+package com.luga_online;
 
-import com.luga_omline.repository.UserRepository;
+import com.luga_online.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

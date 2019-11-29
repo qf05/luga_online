@@ -1,4 +1,4 @@
-package com.luga_omline.model;
+package com.luga_online.model;
 
 
 import lombok.*;

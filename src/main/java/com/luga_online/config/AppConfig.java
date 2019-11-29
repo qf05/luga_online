@@ -1,4 +1,4 @@
-package com.luga_omline.config;
+package com.luga_online.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.h2.tools.Server;
