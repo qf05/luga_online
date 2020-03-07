@@ -34,9 +34,6 @@ public class User {
     @Column(name = "money", nullable = false)
     private long money;
 
-//    private int countInvited;
-
-    //    @Column(name = "banned", nullable = false)
     private boolean banned;
 
 }

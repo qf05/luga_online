@@ -5,9 +5,6 @@ import lombok.*;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "users")
@@ -37,9 +34,6 @@ public class User {
     @Column(name = "money", nullable = false)
     private long money;
 
-//    private int countInvited;
-
-//    @Column(name = "banned", nullable = false)
     private boolean banned;
 
 }

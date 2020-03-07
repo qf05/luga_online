@@ -1,16 +1,5 @@
 package com.luga_online.service;
 
-import com.luga_online.util.Properties;
-import com.yandex.money.api.authorization.AuthorizationData;
-import com.yandex.money.api.authorization.AuthorizationParameters;
-import com.yandex.money.api.methods.Token;
-import com.yandex.money.api.model.Scope;
-import com.yandex.money.api.net.AuthorizationCodeResponse;
-import com.yandex.money.api.net.clients.ApiClient;
-import com.yandex.money.api.net.clients.DefaultApiClient;
-
-import java.net.URI;
-
 public class PayService {
 
     public static void pay() {

@@ -1,6 +1,5 @@
 #  https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 
-
 spring:
   jpa:
     show-sql: true
@@ -21,18 +20,3 @@ spring:
     username: sa
     password:
   h2.console.enabled: true
-
-
-
-#            oauth2:
-#              client:
-#                clientId: xxxxxxx
-#                clientSecret: xxxxxxxxxxx
-#                accessTokenUri: https://oauth.vk.com/access_token
-#                userAuthorizationUri: https://oauth.vk.com/authorize
-#                tokenName: code
-#                authenticationScheme: query
-#                clientAuthenticationScheme: form
-#                grant-type: authorization_code
-#              resource:
-#                userInfoUri: https://api.vk.com/method/users.get

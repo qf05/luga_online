@@ -20,7 +20,6 @@ import java.io.IOException;
 public class VkCustomFilter extends AbstractAuthenticationProcessingFilter {
 
     public OAuth2RestOperations restTemplate;
-//    private UserInfoTokenServicesForVk tokenServices;
 
     //    @Autowired
     private final AuthService authService;
@@ -29,10 +28,6 @@ public class VkCustomFilter extends AbstractAuthenticationProcessingFilter {
         super("/login");
         this.authService = authService;
     }
-
-//    public void setTokenServices(UserInfoTokenServicesForVk tokenServices) {
-//        this.tokenServices = tokenServices;
-//    }
 
     public void setRestTemplate(OAuth2RestOperations restTemplate) {
         this.restTemplate = restTemplate;
@@ -44,43 +39,13 @@ public class VkCustomFilter extends AbstractAuthenticationProcessingFilter {
         try {
             accessToken = restTemplate.getAccessToken();
             System.out.println(accessToken.getAdditionalInformation().get("user_id").toString());
-//            if (accessToken != null){
-//                SecurityContext context = SecurityContextHolder.getContext();
-//                Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//                Map<String, Object> details = (Map<String, Object>) auth.getDetails();
-//                details.put("email", accessToken.getAdditionalInformation().get("email"));
-//            }
         } catch (OAuth2Exception e) {
             BadCredentialsException bad = new BadCredentialsException("Could not obtain access token", e);
             publish(new OAuth2AuthenticationFailureEvent(bad));
             throw bad;
         }
         try {
-
-//            String path = "https://api.vk.com/method/users.get" +
-//                    accessToken.getAdditionalInformation().get("user_id").toString()
-//                    + "&v=5.74&access_token="
-//                    + accessToken.getValue();
-//            ResponseEntity<Map> forEntity = restTemplate.getForEntity(path, Map.class);
-//            Map<String, Object> body = forEntity.getBody();
-//
-//            String name = Objects.requireNonNull(body).get("lastName").toString() + body.get("firstName").toString();
-
             return authService.setAuthorized(accessToken, request);
-
-
-//
-//
-//            String userInfoEndpointUrl = tokenServices.getUserInfoEndpointUrl() + "/?uids=" + accessToken.getAdditionalInformation().get("user_id").toString()+"&v=5.74";
-//            tokenServices.setUserInfoEndpointUrl(userInfoEndpointUrl);
-//            OAuth2Authentication result = tokenServices.loadAuthentication(accessToken.getValue());
-//            if (authenticationDetailsSource!=null) {
-//                request.setAttribute(OAuth2AuthenticationDetails.ACCESS_TOKEN_VALUE, accessToken.getValue());
-//                request.setAttribute(OAuth2AuthenticationDetails.ACCESS_TOKEN_TYPE, accessToken.getTokenType());
-//                result.setDetails(authenticationDetailsSource.buildDetails(request));
-//            }
-//            publish(new AuthenticationSuccessEvent(result));
-//            return result;
         } catch (InvalidTokenException e) {
             BadCredentialsException bad = new BadCredentialsException("Could not obtain user details from token", e);
             publish(new OAuth2AuthenticationFailureEvent(bad));

@@ -1,9 +1,6 @@
 package com.luga_online.model;
 
-import com.vk.api.sdk.client.TransportClient;
-import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.UserActor;
-import com.vk.api.sdk.httpclient.HttpTransportClient;
 import lombok.Getter;
 import lombok.ToString;
 

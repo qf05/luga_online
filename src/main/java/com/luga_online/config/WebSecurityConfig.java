@@ -1,9 +1,5 @@
 package com.luga_online.config;
 
-//import com.luga_online.util.UserInfoTokenServicesForVk;
-//import com.luga_online.util.VkCustomFilter;
-//import com.luga_online.util.UserInfoTokenServicesForVk;
-
 import com.luga_online.service.AuthService;
 import com.luga_online.util.VkCustomFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,15 +33,12 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 
-import static com.luga_online.util.Properties.VK_APP_ID;
-import static com.luga_online.util.Properties.VK_CLIENT_SECRET;
+import static com.luga_online.util.Properties.*;
 
 @Configuration
 @EnableWebSecurity
 @EnableOAuth2Client
-//@EnableOAuth2Sso
 @EnableAuthorizationServer
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -58,14 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http
-//                .authorizeRequests()
-//                .mvcMatchers("/", "/login")
-//                .permitAll()
-//                .anyRequest()
-//                .authenticated()
-//        http
                 .antMatcher("/**")
                 .authorizeRequests()
                 .antMatchers("/", "/login**", "/webjars/**")
@@ -87,32 +73,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
     }
 
-
     @Bean
     public AuthorizationCodeResourceDetails vkAuth() {
         AuthorizationCodeResourceDetails details = new AuthorizationCodeResourceDetails();
-//        details.setClientId("6785724");
-//        details.setClientSecret("4NuxUQwll8PWsDEr2uKY");
         details.setClientId(VK_APP_ID);
         details.setClientSecret(VK_CLIENT_SECRET);
-        details.setAccessTokenUri("https://oauth.vk.com/access_token");
+        details.setAccessTokenUri(VK_ACCESS_TOKEN_URI);
         details.setAuthenticationScheme(AuthenticationScheme.form);
-        ;
-        details.setScope(Arrays.asList("friends", "groups", "offline"));
+        details.setScope(VK_SCOPE);
         details.setClientAuthenticationScheme(AuthenticationScheme.query);
-        details.setPreEstablishedRedirectUri("http://localhost:8080/login");
-        details.setUserAuthorizationUri("https://oauth.vk.com/authorize");
-        details.setTokenName("vk");
+        details.setPreEstablishedRedirectUri(VK_PRE_ESTABLISHED_REDIRECT_URI);
+        details.setUserAuthorizationUri(VK_USER_AUTHORIZATION_URI);
+        details.setTokenName(VK_TOKEN_NAME);
         return details;
     }
-
-//    @Bean
-////    @ConfigurationProperties("vk.resource")
-//    public ResourceServerProperties vkResource() {
-//        ResourceServerProperties properties = new ResourceServerProperties();
-//        properties.setUserInfoUri("https://api.vk.com/method/users.get");
-//        return properties;
-//    }
 
     @Bean
     public FilterRegistrationBean oauth2ClientFilterRegistration(
@@ -153,15 +127,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         VkCustomFilter vkFilter = new VkCustomFilter(authService);
         OAuth2RestTemplate vkTemplate = new OAuth2RestTemplate(vkAuth(), oauth2ClientContext);
         vkFilter.setRestTemplate(vkTemplate);
-//        UserInfoTokenServices tokenServices = new UserInfoTokenServices(vkResource().getUserInfoUri(), vk().getClientId());
-//        UserInfoTokenServicesForVk tokenServices = new UserInfoTokenServicesForVk(vkResource().getUserInfoUri(), vk().getClientId());
-////        UserInfoTokenServicesForVk tokenServices = new UserInfoTokenServicesForVk("http://localhost:8080", "6785724");
-//        tokenServices.setRestTemplate(vkTemplate);
-//        vkFilter.setTokenServices(tokenServices);
-//        filters.add(vkFilter);
-//
-//        filter.setFilters(filters);
-//        return filter;
         return vkFilter;
     }
 }

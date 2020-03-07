@@ -35,11 +35,6 @@ public class MainController {
         return "count friends = " + countfriend;
     }
 
-//    @PostMapping("/")
-//    public String mainPost(){
-//        return "hello";
-//    }
-
     @GetMapping("/group")
     public String main(String uri) {
         System.out.println(uri);

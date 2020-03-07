@@ -13,11 +13,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 
-//import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
-
 @SpringBootApplication
 @AllArgsConstructor
-//@EnableOAuth2Sso
 public class LugaOnlineApplication implements ApplicationRunner {
 
     @Autowired

@@ -10,13 +10,11 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-//import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 
 @SpringBootApplication
 @AllArgsConstructor
-//@EnableOAuth2Sso
 public class LugaOnlineApplication implements ApplicationRunner {
 
     @Autowired
@@ -35,12 +33,12 @@ public class LugaOnlineApplication implements ApplicationRunner {
     private OAuth2ClientContext oauth2ClientContext;
 
     @Bean
-    public OAuth2ClientContext oAuth2ClientContext(){
+    public OAuth2ClientContext oAuth2ClientContext() {
         return oauth2ClientContext;
     }
 
     @Bean
-    public VkApiClient vk(){
+    public VkApiClient vk() {
         return new VkApiClient(HttpTransportClient.getInstance());
     }
 }
