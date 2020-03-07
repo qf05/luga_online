@@ -1,0 +1,965 @@
+Index: .gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .gitignore	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
++++ .gitignore	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
+@@ -0,0 +1,31 @@
++HELP.md
++target/
++!.mvn/wrapper/maven-wrapper.jar
++!**/src/main/**
++!**/src/test/**
++
++### STS ###
++.apt_generated
++.classpath
++.factorypath
++.project
++.settings
++.springBeans
++.sts4-cache
++
++### IntelliJ IDEA ###
++.idea
++*.iws
++*.iml
++*.ipr
++
++### NetBeans ###
++/nbproject/private/
++/nbbuild/
++/dist/
++/nbdist/
++/.nb-gradle/
++build/
++
++### VS Code ###
++.vscode/
+Index: mvnw
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- mvnw	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
++++ mvnw	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
+@@ -0,0 +1,310 @@
++#!/bin/sh
++# ----------------------------------------------------------------------------
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#    https://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing,
++# software distributed under the License is distributed on an
++# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++# KIND, either express or implied.  See the License for the
++# specific language governing permissions and limitations
++# under the License.
++# ----------------------------------------------------------------------------
++
++# ----------------------------------------------------------------------------
++# Maven2 Start Up Batch script
++#
++# Required ENV vars:
++# ------------------
++#   JAVA_HOME - location of a JDK home dir
++#
++# Optional ENV vars
++# -----------------
++#   M2_HOME - location of maven2's installed home dir
++#   MAVEN_OPTS - parameters passed to the Java VM when running Maven
++#     e.g. to debug Maven itself, use
++#       set MAVEN_OPTS=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000
++#   MAVEN_SKIP_RC - flag to disable loading of mavenrc files
++# ----------------------------------------------------------------------------
++
++if [ -z "$MAVEN_SKIP_RC" ] ; then
++
++  if [ -f /etc/mavenrc ] ; then
++    . /etc/mavenrc
++  fi
++
++  if [ -f "$HOME/.mavenrc" ] ; then
++    . "$HOME/.mavenrc"
++  fi
++
++fi
++
++# OS specific support.  $var _must_ be set to either true or false.
++cygwin=false;
++darwin=false;
++mingw=false
++case "`uname`" in
++  CYGWIN*) cygwin=true ;;
++  MINGW*) mingw=true;;
++  Darwin*) darwin=true
++    # Use /usr/libexec/java_home if available, otherwise fall back to /Library/Java/Home
++    # See https://developer.apple.com/library/mac/qa/qa1170/_index.html
++    if [ -z "$JAVA_HOME" ]; then
++      if [ -x "/usr/libexec/java_home" ]; then
++        export JAVA_HOME="`/usr/libexec/java_home`"
++      else
++        export JAVA_HOME="/Library/Java/Home"
++      fi
++    fi
++    ;;
++esac
++
++if [ -z "$JAVA_HOME" ] ; then
++  if [ -r /etc/gentoo-release ] ; then
++    JAVA_HOME=`java-config --jre-home`
++  fi
++fi
++
++if [ -z "$M2_HOME" ] ; then
++  ## resolve links - $0 may be a link to maven's home
++  PRG="$0"
++
++  # need this for relative symlinks
++  while [ -h "$PRG" ] ; do
++    ls=`ls -ld "$PRG"`
++    link=`expr "$ls" : '.*-> \(.*\)$'`
++    if expr "$link" : '/.*' > /dev/null; then
++      PRG="$link"
++    else
++      PRG="`dirname "$PRG"`/$link"
++    fi
++  done
++
++  saveddir=`pwd`
++
++  M2_HOME=`dirname "$PRG"`/..
++
++  # make it fully qualified
++  M2_HOME=`cd "$M2_HOME" && pwd`
++
++  cd "$saveddir"
++  # echo Using m2 at $M2_HOME
++fi
++
++# For Cygwin, ensure paths are in UNIX format before anything is touched
++if $cygwin ; then
++  [ -n "$M2_HOME" ] &&
++    M2_HOME=`cygpath --unix "$M2_HOME"`
++  [ -n "$JAVA_HOME" ] &&
++    JAVA_HOME=`cygpath --unix "$JAVA_HOME"`
++  [ -n "$CLASSPATH" ] &&
++    CLASSPATH=`cygpath --path --unix "$CLASSPATH"`
++fi
++
++# For Mingw, ensure paths are in UNIX format before anything is touched
++if $mingw ; then
++  [ -n "$M2_HOME" ] &&
++    M2_HOME="`(cd "$M2_HOME"; pwd)`"
++  [ -n "$JAVA_HOME" ] &&
++    JAVA_HOME="`(cd "$JAVA_HOME"; pwd)`"
++fi
++
++if [ -z "$JAVA_HOME" ]; then
++  javaExecutable="`which javac`"
++  if [ -n "$javaExecutable" ] && ! [ "`expr \"$javaExecutable\" : '\([^ ]*\)'`" = "no" ]; then
++    # readlink(1) is not available as standard on Solaris 10.
++    readLink=`which readlink`
++    if [ ! `expr "$readLink" : '\([^ ]*\)'` = "no" ]; then
++      if $darwin ; then
++        javaHome="`dirname \"$javaExecutable\"`"
++        javaExecutable="`cd \"$javaHome\" && pwd -P`/javac"
++      else
++        javaExecutable="`readlink -f \"$javaExecutable\"`"
++      fi
++      javaHome="`dirname \"$javaExecutable\"`"
++      javaHome=`expr "$javaHome" : '\(.*\)/bin'`
++      JAVA_HOME="$javaHome"
++      export JAVA_HOME
++    fi
++  fi
++fi
++
++if [ -z "$JAVACMD" ] ; then
++  if [ -n "$JAVA_HOME"  ] ; then
++    if [ -x "$JAVA_HOME/jre/sh/java" ] ; then
++      # IBM's JDK on AIX uses strange locations for the executables
++      JAVACMD="$JAVA_HOME/jre/sh/java"
++    else
++      JAVACMD="$JAVA_HOME/bin/java"
++    fi
++  else
++    JAVACMD="`which java`"
++  fi
++fi
++
++if [ ! -x "$JAVACMD" ] ; then
++  echo "Error: JAVA_HOME is not defined correctly." >&2
++  echo "  We cannot execute $JAVACMD" >&2
++  exit 1
++fi
++
++if [ -z "$JAVA_HOME" ] ; then
++  echo "Warning: JAVA_HOME environment variable is not set."
++fi
++
++CLASSWORLDS_LAUNCHER=org.codehaus.plexus.classworlds.launcher.Launcher
++
++# traverses directory structure from process work directory to filesystem root
++# first directory with .mvn subdirectory is considered project base directory
++find_maven_basedir() {
++
++  if [ -z "$1" ]
++  then
++    echo "Path not specified to find_maven_basedir"
++    return 1
++  fi
++
++  basedir="$1"
++  wdir="$1"
++  while [ "$wdir" != '/' ] ; do
++    if [ -d "$wdir"/.mvn ] ; then
++      basedir=$wdir
++      break
++    fi
++    # workaround for JBEAP-8937 (on Solaris 10/Sparc)
++    if [ -d "${wdir}" ]; then
++      wdir=`cd "$wdir/.."; pwd`
++    fi
++    # end of workaround
++  done
++  echo "${basedir}"
++}
++
++# concatenates all lines of a file
++concat_lines() {
++  if [ -f "$1" ]; then
++    echo "$(tr -s '\n' ' ' < "$1")"
++  fi
++}
++
++BASE_DIR=`find_maven_basedir "$(pwd)"`
++if [ -z "$BASE_DIR" ]; then
++  exit 1;
++fi
++
++##########################################################################################
++# Extension to allow automatically downloading the maven-wrapper.jar from Maven-central
++# This allows using the maven wrapper in projects that prohibit checking in binary data.
++##########################################################################################
++if [ -r "$BASE_DIR/.mvn/wrapper/maven-wrapper.jar" ]; then
++    if [ "$MVNW_VERBOSE" = true ]; then
++      echo "Found .mvn/wrapper/maven-wrapper.jar"
++    fi
++else
++    if [ "$MVNW_VERBOSE" = true ]; then
++      echo "Couldn't find .mvn/wrapper/maven-wrapper.jar, downloading it ..."
++    fi
++    if [ -n "$MVNW_REPOURL" ]; then
++      jarUrl="$MVNW_REPOURL/io/takari/maven-wrapper/0.5.5/maven-wrapper-0.5.5.jar"
++    else
++      jarUrl="https://repo.maven.apache.org/maven2/io/takari/maven-wrapper/0.5.5/maven-wrapper-0.5.5.jar"
++    fi
++    while IFS="=" read key value; do
++      case "$key" in (wrapperUrl) jarUrl="$value"; break ;;
++      esac
++    done < "$BASE_DIR/.mvn/wrapper/maven-wrapper.properties"
++    if [ "$MVNW_VERBOSE" = true ]; then
++      echo "Downloading from: $jarUrl"
++    fi
++    wrapperJarPath="$BASE_DIR/.mvn/wrapper/maven-wrapper.jar"
++    if $cygwin; then
++      wrapperJarPath=`cygpath --path --windows "$wrapperJarPath"`
++    fi
++
++    if command -v wget > /dev/null; then
++        if [ "$MVNW_VERBOSE" = true ]; then
++          echo "Found wget ... using wget"
++        fi
++        if [ -z "$MVNW_USERNAME" ] || [ -z "$MVNW_PASSWORD" ]; then
++            wget "$jarUrl" -O "$wrapperJarPath"
++        else
++            wget --http-user=$MVNW_USERNAME --http-password=$MVNW_PASSWORD "$jarUrl" -O "$wrapperJarPath"
++        fi
++    elif command -v curl > /dev/null; then
++        if [ "$MVNW_VERBOSE" = true ]; then
++          echo "Found curl ... using curl"
++        fi
++        if [ -z "$MVNW_USERNAME" ] || [ -z "$MVNW_PASSWORD" ]; then
++            curl -o "$wrapperJarPath" "$jarUrl" -f
++        else
++            curl --user $MVNW_USERNAME:$MVNW_PASSWORD -o "$wrapperJarPath" "$jarUrl" -f
++        fi
++        
++    else
++        if [ "$MVNW_VERBOSE" = true ]; then
++          echo "Falling back to using Java to download"
++        fi
++        javaClass="$BASE_DIR/.mvn/wrapper/MavenWrapperDownloader.java"
++        # For Cygwin, switch paths to Windows format before running javac
++        if $cygwin; then
++          javaClass=`cygpath --path --windows "$javaClass"`
++        fi
++        if [ -e "$javaClass" ]; then
++            if [ ! -e "$BASE_DIR/.mvn/wrapper/MavenWrapperDownloader.class" ]; then
++                if [ "$MVNW_VERBOSE" = true ]; then
++                  echo " - Compiling MavenWrapperDownloader.java ..."
++                fi
++                # Compiling the Java class
++                ("$JAVA_HOME/bin/javac" "$javaClass")
++            fi
++            if [ -e "$BASE_DIR/.mvn/wrapper/MavenWrapperDownloader.class" ]; then
++                # Running the downloader
++                if [ "$MVNW_VERBOSE" = true ]; then
++                  echo " - Running MavenWrapperDownloader.java ..."
++                fi
++                ("$JAVA_HOME/bin/java" -cp .mvn/wrapper MavenWrapperDownloader "$MAVEN_PROJECTBASEDIR")
++            fi
++        fi
++    fi
++fi
++##########################################################################################
++# End of extension
++##########################################################################################
++
++export MAVEN_PROJECTBASEDIR=${MAVEN_BASEDIR:-"$BASE_DIR"}
++if [ "$MVNW_VERBOSE" = true ]; then
++  echo $MAVEN_PROJECTBASEDIR
++fi
++MAVEN_OPTS="$(concat_lines "$MAVEN_PROJECTBASEDIR/.mvn/jvm.config") $MAVEN_OPTS"
++
++# For Cygwin, switch paths to Windows format before running java
++if $cygwin; then
++  [ -n "$M2_HOME" ] &&
++    M2_HOME=`cygpath --path --windows "$M2_HOME"`
++  [ -n "$JAVA_HOME" ] &&
++    JAVA_HOME=`cygpath --path --windows "$JAVA_HOME"`
++  [ -n "$CLASSPATH" ] &&
++    CLASSPATH=`cygpath --path --windows "$CLASSPATH"`
++  [ -n "$MAVEN_PROJECTBASEDIR" ] &&
++    MAVEN_PROJECTBASEDIR=`cygpath --path --windows "$MAVEN_PROJECTBASEDIR"`
++fi
++
++# Provide a "standardized" way to retrieve the CLI args that will
++# work with both Windows and non-Windows executions.
++MAVEN_CMD_LINE_ARGS="$MAVEN_CONFIG $@"
++export MAVEN_CMD_LINE_ARGS
++
++WRAPPER_LAUNCHER=org.apache.maven.wrapper.MavenWrapperMain
++
++exec "$JAVACMD" \
++  $MAVEN_OPTS \
++  -classpath "$MAVEN_PROJECTBASEDIR/.mvn/wrapper/maven-wrapper.jar" \
++  "-Dmaven.home=${M2_HOME}" "-Dmaven.multiModuleProjectDirectory=${MAVEN_PROJECTBASEDIR}" \
++  ${WRAPPER_LAUNCHER} $MAVEN_CONFIG "$@"
+Index: mvnw.cmd
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- mvnw.cmd	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
++++ mvnw.cmd	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
+@@ -0,0 +1,182 @@
++@REM ----------------------------------------------------------------------------
++@REM Licensed to the Apache Software Foundation (ASF) under one
++@REM or more contributor license agreements.  See the NOTICE file
++@REM distributed with this work for additional information
++@REM regarding copyright ownership.  The ASF licenses this file
++@REM to you under the Apache License, Version 2.0 (the
++@REM "License"); you may not use this file except in compliance
++@REM with the License.  You may obtain a copy of the License at
++@REM
++@REM    https://www.apache.org/licenses/LICENSE-2.0
++@REM
++@REM Unless required by applicable law or agreed to in writing,
++@REM software distributed under the License is distributed on an
++@REM "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++@REM KIND, either express or implied.  See the License for the
++@REM specific language governing permissions and limitations
++@REM under the License.
++@REM ----------------------------------------------------------------------------
++
++@REM ----------------------------------------------------------------------------
++@REM Maven2 Start Up Batch script
++@REM
++@REM Required ENV vars:
++@REM JAVA_HOME - location of a JDK home dir
++@REM
++@REM Optional ENV vars
++@REM M2_HOME - location of maven2's installed home dir
++@REM MAVEN_BATCH_ECHO - set to 'on' to enable the echoing of the batch commands
++@REM MAVEN_BATCH_PAUSE - set to 'on' to wait for a key stroke before ending
++@REM MAVEN_OPTS - parameters passed to the Java VM when running Maven
++@REM     e.g. to debug Maven itself, use
++@REM set MAVEN_OPTS=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000
++@REM MAVEN_SKIP_RC - flag to disable loading of mavenrc files
++@REM ----------------------------------------------------------------------------
++
++@REM Begin all REM lines with '@' in case MAVEN_BATCH_ECHO is 'on'
++@echo off
++@REM set title of command window
++title %0
++@REM enable echoing by setting MAVEN_BATCH_ECHO to 'on'
++@if "%MAVEN_BATCH_ECHO%" == "on"  echo %MAVEN_BATCH_ECHO%
++
++@REM set %HOME% to equivalent of $HOME
++if "%HOME%" == "" (set "HOME=%HOMEDRIVE%%HOMEPATH%")
++
++@REM Execute a user defined script before this one
++if not "%MAVEN_SKIP_RC%" == "" goto skipRcPre
++@REM check for pre script, once with legacy .bat ending and once with .cmd ending
++if exist "%HOME%\mavenrc_pre.bat" call "%HOME%\mavenrc_pre.bat"
++if exist "%HOME%\mavenrc_pre.cmd" call "%HOME%\mavenrc_pre.cmd"
++:skipRcPre
++
++@setlocal
++
++set ERROR_CODE=0
++
++@REM To isolate internal variables from possible post scripts, we use another setlocal
++@setlocal
++
++@REM ==== START VALIDATION ====
++if not "%JAVA_HOME%" == "" goto OkJHome
++
++echo.
++echo Error: JAVA_HOME not found in your environment. >&2
++echo Please set the JAVA_HOME variable in your environment to match the >&2
++echo location of your Java installation. >&2
++echo.
++goto error
++
++:OkJHome
++if exist "%JAVA_HOME%\bin\java.exe" goto init
++
++echo.
++echo Error: JAVA_HOME is set to an invalid directory. >&2
++echo JAVA_HOME = "%JAVA_HOME%" >&2
++echo Please set the JAVA_HOME variable in your environment to match the >&2
++echo location of your Java installation. >&2
++echo.
++goto error
++
++@REM ==== END VALIDATION ====
++
++:init
++
++@REM Find the project base dir, i.e. the directory that contains the folder ".mvn".
++@REM Fallback to current working directory if not found.
++
++set MAVEN_PROJECTBASEDIR=%MAVEN_BASEDIR%
++IF NOT "%MAVEN_PROJECTBASEDIR%"=="" goto endDetectBaseDir
++
++set EXEC_DIR=%CD%
++set WDIR=%EXEC_DIR%
++:findBaseDir
++IF EXIST "%WDIR%"\.mvn goto baseDirFound
++cd ..
++IF "%WDIR%"=="%CD%" goto baseDirNotFound
++set WDIR=%CD%
++goto findBaseDir
++
++:baseDirFound
++set MAVEN_PROJECTBASEDIR=%WDIR%
++cd "%EXEC_DIR%"
++goto endDetectBaseDir
++
++:baseDirNotFound
++set MAVEN_PROJECTBASEDIR=%EXEC_DIR%
++cd "%EXEC_DIR%"
++
++:endDetectBaseDir
++
++IF NOT EXIST "%MAVEN_PROJECTBASEDIR%\.mvn\jvm.config" goto endReadAdditionalConfig
++
++@setlocal EnableExtensions EnableDelayedExpansion
++for /F "usebackq delims=" %%a in ("%MAVEN_PROJECTBASEDIR%\.mvn\jvm.config") do set JVM_CONFIG_MAVEN_PROPS=!JVM_CONFIG_MAVEN_PROPS! %%a
++@endlocal & set JVM_CONFIG_MAVEN_PROPS=%JVM_CONFIG_MAVEN_PROPS%
++
++:endReadAdditionalConfig
++
++SET MAVEN_JAVA_EXE="%JAVA_HOME%\bin\java.exe"
++set WRAPPER_JAR="%MAVEN_PROJECTBASEDIR%\.mvn\wrapper\maven-wrapper.jar"
++set WRAPPER_LAUNCHER=org.apache.maven.wrapper.MavenWrapperMain
++
++set DOWNLOAD_URL="https://repo.maven.apache.org/maven2/io/takari/maven-wrapper/0.5.5/maven-wrapper-0.5.5.jar"
++
++FOR /F "tokens=1,2 delims==" %%A IN ("%MAVEN_PROJECTBASEDIR%\.mvn\wrapper\maven-wrapper.properties") DO (
++    IF "%%A"=="wrapperUrl" SET DOWNLOAD_URL=%%B
++)
++
++@REM Extension to allow automatically downloading the maven-wrapper.jar from Maven-central
++@REM This allows using the maven wrapper in projects that prohibit checking in binary data.
++if exist %WRAPPER_JAR% (
++    if "%MVNW_VERBOSE%" == "true" (
++        echo Found %WRAPPER_JAR%
++    )
++) else (
++    if not "%MVNW_REPOURL%" == "" (
++        SET DOWNLOAD_URL="%MVNW_REPOURL%/io/takari/maven-wrapper/0.5.5/maven-wrapper-0.5.5.jar"
++    )
++    if "%MVNW_VERBOSE%" == "true" (
++        echo Couldn't find %WRAPPER_JAR%, downloading it ...
++        echo Downloading from: %DOWNLOAD_URL%
++    )
++
++    powershell -Command "&{"^
++		"$webclient = new-object System.Net.WebClient;"^
++		"if (-not ([string]::IsNullOrEmpty('%MVNW_USERNAME%') -and [string]::IsNullOrEmpty('%MVNW_PASSWORD%'))) {"^
++		"$webclient.Credentials = new-object System.Net.NetworkCredential('%MVNW_USERNAME%', '%MVNW_PASSWORD%');"^
++		"}"^
++		"[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $webclient.DownloadFile('%DOWNLOAD_URL%', '%WRAPPER_JAR%')"^
++		"}"
++    if "%MVNW_VERBOSE%" == "true" (
++        echo Finished downloading %WRAPPER_JAR%
++    )
++)
++@REM End of extension
++
++@REM Provide a "standardized" way to retrieve the CLI args that will
++@REM work with both Windows and non-Windows executions.
++set MAVEN_CMD_LINE_ARGS=%*
++
++%MAVEN_JAVA_EXE% %JVM_CONFIG_MAVEN_PROPS% %MAVEN_OPTS% %MAVEN_DEBUG_OPTS% -classpath %WRAPPER_JAR% "-Dmaven.multiModuleProjectDirectory=%MAVEN_PROJECTBASEDIR%" %WRAPPER_LAUNCHER% %MAVEN_CONFIG% %*
++if ERRORLEVEL 1 goto error
++goto end
++
++:error
++set ERROR_CODE=1
++
++:end
++@endlocal & set ERROR_CODE=%ERROR_CODE%
++
++if not "%MAVEN_SKIP_RC%" == "" goto skipRcPost
++@REM check for post script, once with legacy .bat ending and once with .cmd ending
++if exist "%HOME%\mavenrc_post.bat" call "%HOME%\mavenrc_post.bat"
++if exist "%HOME%\mavenrc_post.cmd" call "%HOME%\mavenrc_post.cmd"
++:skipRcPost
++
++@REM pause the script if MAVEN_BATCH_PAUSE is set to 'on'
++if "%MAVEN_BATCH_PAUSE%" == "on" pause
++
++if "%MAVEN_TERMINATE_CMD%" == "on" exit %ERROR_CODE%
++
++exit /B %ERROR_CODE%
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- pom.xml	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
++++ pom.xml	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
+@@ -0,0 +1,81 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
++    <modelVersion>4.0.0</modelVersion>
++    <parent>
++        <groupId>org.springframework.boot</groupId>
++        <artifactId>spring-boot-starter-parent</artifactId>
++        <version>2.2.1.RELEASE</version>
++        <relativePath/> <!-- lookup parent from repository -->
++    </parent>
++    <groupId>com.luga_omline</groupId>
++    <artifactId>luga_online</artifactId>
++    <version>0.0.1-SNAPSHOT</version>
++    <name>luga_online</name>
++    <description>Demo project for Spring Boot</description>
++
++    <properties>
++        <java.version>1.8</java.version>
++    </properties>
++
++    <dependencies>
++        <dependency>
++            <groupId>org.springframework.boot</groupId>
++            <artifactId>spring-boot-starter-data-jpa</artifactId>
++        </dependency>
++        <dependency>
++            <groupId>org.springframework.boot</groupId>
++            <artifactId>spring-boot-starter-security</artifactId>
++        </dependency>
++        <dependency>
++            <groupId>org.springframework.boot</groupId>
++            <artifactId>spring-boot-starter-web</artifactId>
++        </dependency>
++
++        <dependency>
++            <groupId>mysql</groupId>
++            <artifactId>mysql-connector-java</artifactId>
++            <scope>runtime</scope>
++        </dependency>
++        <dependency>
++            <groupId>com.h2database</groupId>
++            <artifactId>h2</artifactId>
++        </dependency>
++        <dependency>
++            <groupId>org.springframework.boot</groupId>
++            <artifactId>spring-boot-configuration-processor</artifactId>
++            <optional>true</optional>
++        </dependency>
++        <dependency>
++            <groupId>org.projectlombok</groupId>
++            <artifactId>lombok</artifactId>
++            <optional>true</optional>
++        </dependency>
++        <dependency>
++            <groupId>org.springframework.boot</groupId>
++            <artifactId>spring-boot-starter-test</artifactId>
++            <scope>test</scope>
++            <exclusions>
++                <exclusion>
++                    <groupId>org.junit.vintage</groupId>
++                    <artifactId>junit-vintage-engine</artifactId>
++                </exclusion>
++            </exclusions>
++        </dependency>
++        <dependency>
++            <groupId>org.springframework.security</groupId>
++            <artifactId>spring-security-test</artifactId>
++            <scope>test</scope>
++        </dependency>
++    </dependencies>
++
++    <build>
++        <plugins>
++            <plugin>
++                <groupId>org.springframework.boot</groupId>
++                <artifactId>spring-boot-maven-plugin</artifactId>
++            </plugin>
++        </plugins>
++    </build>
++
++</project>
+Index: src/main/java/com/luga_omline/LugaOnlineApplication.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/luga_omline/LugaOnlineApplication.java	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
++++ src/main/java/com/luga_omline/LugaOnlineApplication.java	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
+@@ -0,0 +1,23 @@
++package com.luga_omline;
++
++import com.luga_omline.repository.UserRepository;
++import lombok.AllArgsConstructor;
++import org.springframework.boot.ApplicationArguments;
++import org.springframework.boot.ApplicationRunner;
++import org.springframework.boot.SpringApplication;
++import org.springframework.boot.autoconfigure.SpringBootApplication;
++
++@SpringBootApplication
++@AllArgsConstructor
++public class LugaOnlineApplication implements ApplicationRunner {
++    private final UserRepository userRepository;
++
++    public static void main(String[] args) {
++        SpringApplication.run(LugaOnlineApplication.class, args);
++    }
++
++    @Override
++    public void run(ApplicationArguments args) {
++        System.out.println(userRepository.findAll());
++    }
++}
+Index: src/main/java/com/luga_omline/config/AppConfig.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/luga_omline/config/AppConfig.java	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
++++ src/main/java/com/luga_omline/config/AppConfig.java	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
+@@ -0,0 +1,24 @@
++package com.luga_omline.config;
++
++import lombok.extern.slf4j.Slf4j;
++import org.h2.tools.Server;
++import org.springframework.context.annotation.Bean;
++import org.springframework.context.annotation.Configuration;
++
++import java.sql.SQLException;
++
++@Configuration
++@Slf4j
++public class AppConfig {
++
++//    @Bean(initMethod = "start", destroyMethod = "stop")
++//    public Server h2WebServer() throws SQLException {
++//                return Server.createWebServer("-web", "-webAllowOthers", "-webPort", "8082");
++//            }
++
++    @Bean(initMethod = "start", destroyMethod = "stop")
++    public Server h2Server() throws SQLException {
++        log.info("Start H2 TCP server");
++        return Server.createTcpServer("-tcp", "-tcpAllowOthers", "-tcpPort", "9092");
++    }
++}
+Index: src/main/java/com/luga_omline/model/Invite.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/luga_omline/model/Invite.java	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
++++ src/main/java/com/luga_omline/model/Invite.java	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
+@@ -0,0 +1,32 @@
++package com.luga_omline.model;
++
++import lombok.*;
++import org.hibernate.validator.constraints.Range;
++import org.springframework.data.jpa.domain.AbstractPersistable;
++
++import javax.persistence.Column;
++import javax.persistence.Entity;
++import javax.persistence.Table;
++
++@Entity
++@Table(name = "invite")
++@Getter
++@Setter
++@NoArgsConstructor
++@AllArgsConstructor
++@ToString(callSuper = true)
++
++public class Invite extends AbstractPersistable<Integer> {
++
++    @Column(name = "user_id", nullable = false)
++    @Range(min = 1)
++//    @ManyToOne(targetEntity = User.class, fetch= FetchType.LAZY, cascade = CascadeType.REMOVE)
++    private int userId;
++
++    @Column(name = "invited_id", nullable = false)
++    @Range(min = 1)
++    private int invitedId;
++
++    @Column(name = "invite_time", nullable = false)
++    private long time;
++}
+Index: src/main/java/com/luga_omline/model/Pay.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/luga_omline/model/Pay.java	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
++++ src/main/java/com/luga_omline/model/Pay.java	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
+@@ -0,0 +1,32 @@
++package com.luga_omline.model;
++
++import lombok.*;
++import org.hibernate.validator.constraints.Range;
++import org.springframework.data.jpa.domain.AbstractPersistable;
++
++import javax.persistence.Column;
++import javax.persistence.Entity;
++import javax.persistence.Table;
++
++@Entity
++@Table(name = "pay")
++@Getter
++@Setter
++@NoArgsConstructor
++@AllArgsConstructor
++@ToString(callSuper = true)
++
++public class Pay extends AbstractPersistable<Integer> {
++
++    @Column(name = "user_id", nullable = false)
++    @Range(min = 1)
++//    @ManyToOne(targetEntity = User.class, fetch= FetchType.LAZY, cascade = CascadeType.REMOVE)
++    private int userId;
++
++    @Column(name = "money", nullable = false)
++    private double money;
++
++    @Column(name = "pay_time", nullable = false)
++    private long time;
++
++}
+Index: src/main/java/com/luga_omline/model/Role.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/luga_omline/model/Role.java	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
++++ src/main/java/com/luga_omline/model/Role.java	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
+@@ -0,0 +1,6 @@
++package com.luga_omline.model;
++
++public enum Role {
++    ADMIN,
++    USER
++}
+Index: src/main/java/com/luga_omline/model/User.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/luga_omline/model/User.java	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
++++ src/main/java/com/luga_omline/model/User.java	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
+@@ -0,0 +1,39 @@
++package com.luga_omline.model;
++
++
++import lombok.*;
++import org.hibernate.validator.constraints.Range;
++
++import javax.persistence.*;
++import javax.validation.constraints.NotEmpty;
++import javax.validation.constraints.Size;
++
++@Entity
++@Table(name = "users")
++@Getter
++@Setter
++@NoArgsConstructor
++@AllArgsConstructor
++@ToString(callSuper = true)
++
++public class User {
++
++    @Id
++    @Column(name = "vk_id", nullable = false, unique = true)
++    @Range(min = 1)
++//    @OneToMany(targetEntity = )
++    private int vkId;
++
++    @Enumerated(EnumType.STRING)
++    @Column(name = "role", nullable = false)
++    private Role role;
++
++    @Column(name = "tel", nullable = false)
++    @NotEmpty
++    @Size(max = 18, min = 18)
++    private String tel;
++
++    @Column(name = "money", nullable = false)
++    private double money;
++
++}
+Index: src/main/java/com/luga_omline/repository/InviteRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/luga_omline/repository/InviteRepository.java	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
++++ src/main/java/com/luga_omline/repository/InviteRepository.java	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
+@@ -0,0 +1,7 @@
++package com.luga_omline.repository;
++
++import com.luga_omline.model.Invite;
++import org.springframework.data.jpa.repository.JpaRepository;
++
++public interface InviteRepository extends JpaRepository<Invite, Integer> {
++}
+Index: src/main/java/com/luga_omline/repository/PayRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/luga_omline/repository/PayRepository.java	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
++++ src/main/java/com/luga_omline/repository/PayRepository.java	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
+@@ -0,0 +1,7 @@
++package com.luga_omline.repository;
++
++import com.luga_omline.model.Pay;
++import org.springframework.data.jpa.repository.JpaRepository;
++
++public interface PayRepository extends JpaRepository<Pay, Integer> {
++}
+Index: src/main/java/com/luga_omline/repository/UserRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/luga_omline/repository/UserRepository.java	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
++++ src/main/java/com/luga_omline/repository/UserRepository.java	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
+@@ -0,0 +1,7 @@
++package com.luga_omline.repository;
++
++import com.luga_omline.model.User;
++import org.springframework.data.jpa.repository.JpaRepository;
++
++public interface UserRepository extends JpaRepository<User, Integer> {
++}
+Index: src/main/resources/application.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/application.yaml	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
++++ src/main/resources/application.yaml	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
+@@ -0,0 +1,30 @@
++#  https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
++spring:
++  jpa:
++    show-sql: true
++    open-in-view: false
++    hibernate:
++      ddl-auto: create-drop
++    properties:
++      #  http://docs.jboss.org/hibernate/orm/5.3/userguide/html_single/Hibernate_User_Guide.html#configurations
++      hibernate:
++        format_sql: true
++        default_batch_fetch_size: 20
++        # https://stackoverflow.com/questions/21257819/what-is-the-difference-between-hibernate-jdbc-fetch-size-and-hibernate-jdbc-batc
++        jdbc.batch_size: 20
++        id.new_generator_mappings: false
++  datasource:
++    # ImMemory
++    url: jdbc:h2:mem:luga
++    #    tcp: jdbc:h2:tcp://localhost:9092/mem:voting
++    # Absolute path
++    #    url: jdbc:h2:C:/projects/bootjava/restorant-voting/db/voting
++    #    tcp: jdbc:h2:tcp://localhost:9092/C:/projects/bootjava/restorant-voting/db/voting
++    #     Relative path form current dir
++    #        url: jdbc:h2:./db/luga
++    # Relative path from home
++    #    url: jdbc:h2:~/voting
++    #    tcp: jdbc:h2:tcp://localhost:9092/~/voting
++    username: sa
++    password:
++  h2.console.enabled: true
+\ No newline at end of file
+Index: src/main/resources/data.sql
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/data.sql	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
++++ src/main/resources/data.sql	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
+@@ -0,0 +1,11 @@
++INSERT INTO USERS (VK_ID, ROLE, TEL, MONEY)
++VALUES (123, 'USER', '+7 (900) 123-45-67', 0),
++       (111, 'ADMIN', '+7 (921) 123-45-67', 123);
++
++INSERT INTO PAY (USER_ID, MONEY, PAY_TIME)
++VALUES (123, 5.23, 12345678),
++       (123, 1.5, 87654321);
++
++INSERT INTO INVITE (USER_ID, INVITED_ID, INVITE_TIME)
++VALUES (123, 1234, 12345677),
++       (111, 4321, 76543211);
+\ No newline at end of file
+Index: src/test/java/com/luga_omline/LugaOnlineApplicationTests.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/com/luga_omline/LugaOnlineApplicationTests.java	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
++++ src/test/java/com/luga_omline/LugaOnlineApplicationTests.java	(revision 18bc0a68562d0126863f226388d0393c588c8dfe)
+@@ -0,0 +1,13 @@
++package com.luga_omline;
++
++import org.junit.jupiter.api.Test;
++import org.springframework.boot.test.context.SpringBootTest;
++
++@SpringBootTest
++class LugaOnlineApplicationTests {
++
++    @Test
++    void contextLoads() {
++    }
++
++}

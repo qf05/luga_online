@@ -1,0 +1,115 @@
+#  https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+
+
+spring:
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          clientId: 233668646673605
+#          clientSecret: 33b17e044ee6a4fa383f46ec6e28ea1d
+#          authenticationScheme: query
+#          clientAuthenticationScheme: form
+#          scope: profile
+#        provider:
+#          accessTokenUri: https://graph.facebook.com/oauth/access_token
+#          userAuthorizationUri: https://www.facebook.com/dialog/oauth
+#          userInfoUri: https://graph.facebook.com/me
+
+#  security:
+#    oauth2:
+#      client:
+#        clientId: 233668646673605
+#        clientSecret: 33b17e044ee6a4fa383f46ec6e28ea1d
+#        accessTokenUri: https://graph.facebook.com/oauth/access_token
+#        userAuthorizationUri: https://www.facebook.com/dialog/oauth
+#        tokenName: oauth_token
+#        authenticationScheme: query
+#        clientAuthenticationScheme: form
+#        scope: profile
+#      resource:
+#        userInfoUri: https://graph.facebook.com/me
+
+
+#  security:
+#    oauth2:
+#      client:
+#        clientId: 6785724
+#        clientSecret: 4NuxUQwll8PWsDEr2uKY
+#        #      redirectUriTemplate: http://localhost:8080/login/vk/success
+#        #      authorizationGrantType: authorization_code
+#        #      clientAuthenticationMethod: form
+#        scope: email,group,friend
+#        access-token-uri: https://oauth.vk.com/access_token
+#        userAuthorizationUri: https://oauth.vk.com/authorize
+#        tokenName: token
+#        authenticationScheme: query
+#        clientAuthenticationScheme: form
+#    #        provider: vk
+#    resource:
+#      userInfoUri: https://api.vk.com/method/users.get
+#      #    authorizationUri: https://oauth.vk.com/authorize
+#      #        tokenUri: https://oauth.vk.com/access_token
+
+  #    userNameAttribute: id
+  #  security:
+  #    oauth2:
+  #      client:
+  #        registration:
+  #          clientId: 6785724
+  #          clientSecret: 4NuxUQwll8PWsDEr2uKY
+  #          redirectUriTemplate: http://localhost:8080/login/vk/success
+  #          authorizationGrantType: authorization_code
+  #          clientAuthenticationMethod: form
+  #          scope: email,group,friend
+  #          provider: vk
+  #
+  #          authorizationUri: https://oauth.vk.com/authorize
+  #          tokenUri: https://oauth.vk.com/access_token
+  #          userInfoUri: https://api.vk.com/method/users.get
+  #          userNameAttribute: id
+
+  jpa:
+    show-sql: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      #  http://docs.jboss.org/hibernate/orm/5.3/userguide/html_single/Hibernate_User_Guide.html#configurations
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 20
+        # https://stackoverflow.com/questions/21257819/what-is-the-difference-between-hibernate-jdbc-fetch-size-and-hibernate-jdbc-batc
+        jdbc.batch_size: 20
+        id.new_generator_mappings: false
+  datasource:
+    # ImMemory
+    url: jdbc:h2:mem:luga
+#    url: jdbc:h2:tcp://localhost:9092/mem:luga
+    #    tcp: jdbc:h2:tcp://localhost:9092/mem:voting
+    # Absolute path
+    #    url: jdbc:h2:C:/projects/bootjava/restorant-voting/db/voting
+    #    tcp: jdbc:h2:tcp://localhost:9092/C:/projects/bootjava/restorant-voting/db/voting
+    #     Relative path form current dir
+    #        url: jdbc:h2:./db/luga
+    # Relative path from home
+    #    url: jdbc:h2:~/voting
+    #    tcp: jdbc:h2:tcp://localhost:9092/~/voting
+    username: sa
+    password:
+  h2.console.enabled: true
+
+
+
+#            oauth2:
+#              client:
+#                clientId: xxxxxxx
+#                clientSecret: xxxxxxxxxxx
+#                accessTokenUri: https://oauth.vk.com/access_token
+#                userAuthorizationUri: https://oauth.vk.com/authorize
+#                tokenName: code
+#                authenticationScheme: query
+#                clientAuthenticationScheme: form
+#                grant-type: authorization_code
+#              resource:
+#                userInfoUri: https://api.vk.com/method/users.get

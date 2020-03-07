@@ -1,0 +1,13 @@
+vk:
+  client:
+    id: vk
+    clientId: "6785724"
+    clientSecret: "4NuxUQwll8PWsDEr2uKY"
+    accessTokenUri: [url]https://oauth.vk.com/access_token[/url]
+    userAuthorizationUri: [url]https://oauth.vk.com/authorize[/url]
+    tokenName: code
+    authenticationScheme: query
+    clientAuthenticationScheme: form
+    scope: email
+  resource:
+    userInfoUri: [url]https://api.vk.com/method/users.get[/url]
