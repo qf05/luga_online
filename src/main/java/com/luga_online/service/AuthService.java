@@ -57,6 +57,8 @@ public class AuthService {
         if (userInfo != null) {
             name = userInfo.getLastName() + " " + userInfo.getFirstName() + " " + userInfo.getScreenName();
             photo = userInfo.getPhoto100();
+            //TODO
+            //if photo null then set photo dog's
         } else {
             throw new RuntimeException();
         }

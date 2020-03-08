@@ -4,7 +4,6 @@ import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourcePropertySource;
-import org.springframework.security.oauth2.common.AuthenticationScheme;
 
 import java.io.IOException;
 import java.util.Arrays;

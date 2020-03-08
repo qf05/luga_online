@@ -23,27 +23,21 @@ public class MainController {
         return "hello";
     }
 
-    @GetMapping("/user")
-    public String user(@AuthenticationPrincipal AuthUser user) {
-        int countfriend = 0;
-        try {
-            countfriend = vk.friends().get(user.getActor()).execute().getCount();
-        } catch (ApiException | ClientException e) {
-            e.printStackTrace();
-        }
-        System.out.println("count friends = " + countfriend);
-        return "count friends = " + countfriend;
-    }
-
-    @GetMapping("/group")
-    public String main(String uri) {
-        System.out.println(uri);
-        return "group";
-    }
-
     @PostMapping("/")
     public String mainPost(String uri) {
         System.out.println(uri);
         return "hello";
+    }
+
+    @GetMapping("/user")
+    public String user(@AuthenticationPrincipal AuthUser user) {
+        int countFriend = 0;
+        try {
+            countFriend = vk.friends().get(user.getActor()).execute().getCount();
+        } catch (ApiException | ClientException e) {
+            e.printStackTrace();
+        }
+        System.out.println("count friends = " + countFriend);
+        return "count friends = " + countFriend;
     }
 }
