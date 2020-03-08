@@ -3,21 +3,15 @@ package com.luga_online.controller;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @EnableAutoConfiguration
-public class InviteController {
+public class YandexController {
 
-    @GetMapping("/invite")
-    public String invitePage() {
+    @GetMapping("/ya")
+    public String payMeTest() {
+
+
         return "hello";
     }
-
-    @PostMapping("/invite")
-    public String invite() {
-        return "hello";
-    }
-
-
 }
