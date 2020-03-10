@@ -60,7 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 .and()
                 .formLogin()
-                .failureUrl("/hello")
+                .failureUrl("/")
                 .defaultSuccessUrl("/invite", true)
                 .and()
                 .exceptionHandling()

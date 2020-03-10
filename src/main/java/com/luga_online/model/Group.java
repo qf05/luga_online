@@ -27,6 +27,7 @@ public class Group {
     private Integer limitInvited;
 
     @Column(name = "all_invited")
+    @Range(min = 0)
     private Integer allInvited;
 
     private boolean active;
