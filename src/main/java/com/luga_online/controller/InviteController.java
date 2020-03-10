@@ -26,7 +26,7 @@ public class InviteController {
             e.printStackTrace();
         }
         System.out.println("count friends = " + countFriend);
-        return "count friends = " + countFriend;
+        return "hello";
     }
 
 

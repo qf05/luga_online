@@ -14,6 +14,7 @@ public class Properties {
 
     public static String YANDEX_TOKEN;
     public static final String YANDEX_APP_ID;
+    public static final String YANDEX_REDIRECT_URI = "http://localhost:8080/ya";
 
     public static final String VK_APP_ID;
     public static final String VK_CLIENT_SECRET;
@@ -28,6 +29,7 @@ public class Properties {
         try {
             PropertySource<Map<String, Object>> propertySource = new ResourcePropertySource(resource);
             YANDEX_APP_ID = (String) propertySource.getProperty("yandex.app.id");
+            YANDEX_TOKEN = (String) propertySource.getProperty("yandex.client.token");
             VK_APP_ID = (String) propertySource.getProperty("vk.app.id");
             VK_CLIENT_SECRET = (String) propertySource.getProperty("vk.client.secret");
 
