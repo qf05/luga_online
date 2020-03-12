@@ -6,35 +6,30 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.client.OAuth2RestOperations;
+import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.filter.OAuth2AuthenticationFailureEvent;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class VkCustomFilter extends AbstractAuthenticationProcessingFilter {
 
-    public OAuth2RestOperations restTemplate;
+    private final OAuth2RestOperations restTemplate;
 
-    //    @Autowired
     private final AuthService authService;
 
-    public VkCustomFilter(AuthService authService) {
+    public VkCustomFilter(AuthService authService, OAuth2RestTemplate restTemplate) {
         super("/login");
         this.authService = authService;
-    }
-
-    public void setRestTemplate(OAuth2RestOperations restTemplate) {
         this.restTemplate = restTemplate;
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         OAuth2AccessToken accessToken;
         try {
             accessToken = restTemplate.getAccessToken();

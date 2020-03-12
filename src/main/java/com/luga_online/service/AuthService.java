@@ -8,7 +8,6 @@ import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.objects.users.UserXtrCounters;
 import com.vk.api.sdk.queries.users.UserField;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,14 +24,17 @@ import java.util.Collections;
 
 @Service
 @Slf4j
-@AllArgsConstructor
 public class AuthService {
 
-    @Autowired
     private final UserService userService;
 
-    @Autowired
     private final VkApiClient vk;
+
+    @Autowired
+    public AuthService(UserService userService, VkApiClient vk) {
+        this.userService = userService;
+        this.vk = vk;
+    }
 
     public Authentication setAuthorized(OAuth2AccessToken accessToken, HttpServletRequest request) {
         Integer user_id = (Integer) accessToken.getAdditionalInformation().get("user_id");
@@ -49,21 +51,22 @@ public class AuthService {
         UserActor actor = new UserActor(user.getVkId(), token);
         UserXtrCounters userInfo = null;
         try {
-            userInfo = vk.users().get(actor).fields(UserField.PHOTO_100).execute().get(0);
+            userInfo = vk.users().get(actor).fields(UserField.PHOTO_50, UserField.PHOTO_100).execute().get(0);
         } catch (ApiException | ClientException e) {
             e.printStackTrace();
         }
 
         if (userInfo != null) {
-            name = userInfo.getLastName() + " " + userInfo.getFirstName() + " " + userInfo.getScreenName();
-            photo = userInfo.getPhoto100();
-            //TODO
-            //if photo null then set photo dog's
+            name = userInfo.getFirstName() + " " + userInfo.getLastName();
+            photo = userInfo.getPhoto50();
+            if (photo == null) {
+                photo = userInfo.getPhoto100();
+            }
         } else {
             throw new RuntimeException();
         }
 
-        AuthUser authUser = new AuthUser(user, actor, name, photo);
+        AuthUser authUser = new AuthUser(user, actor, name, photo, user.getVkId());
         SecurityContext context = SecurityContextHolder.getContext();
         context.setAuthentication(
                 new UsernamePasswordAuthenticationToken(authUser, null,

@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "groups")
@@ -15,7 +16,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
-public class Group {
+public class Group implements Serializable {
 
     @Id
     @Column(name = "group_id", nullable = false, unique = true)

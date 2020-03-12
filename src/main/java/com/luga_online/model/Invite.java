@@ -4,10 +4,8 @@ import lombok.*;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "invite", uniqueConstraints =
@@ -17,12 +15,16 @@ import javax.persistence.UniqueConstraint;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
-public class Invite extends AbstractPersistable<Integer> {
+public class Invite extends AbstractPersistable<Integer> implements Serializable {
 
-    @Column(name = "user_id", nullable = false)
-    @Range(min = 1)
-//    @ManyToOne(targetEntity = User.class, fetch= FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private Integer userId;
+//    @Column(name = "user_id", nullable = false)
+//    @Range(min = 1)
+////    @ManyToOne(targetEntity = User.class, fetch= FetchType.LAZY, cascade = CascadeType.REMOVE)
+//    private Integer userId;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(name = "invited_id", nullable = false)
     @Range(min = 1)

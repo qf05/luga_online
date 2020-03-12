@@ -1,5 +1,6 @@
 package com.luga_online.config;
 
+import com.luga_online.model.Role;
 import com.luga_online.service.AuthService;
 import com.luga_online.util.VkCustomFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,20 +43,24 @@ import static com.luga_online.util.Properties.*;
 @EnableAuthorizationServer
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Qualifier("oauth2ClientContext")
-    @Autowired
-    private OAuth2ClientContext oauth2ClientContext;
+    private final OAuth2ClientContext oauth2ClientContext;
+
+    private final AuthService authService;
 
     @Autowired
-    private AuthService authService;
+    public WebSecurityConfig(@Qualifier("oauth2ClientContext") OAuth2ClientContext oauth2ClientContext, AuthService authService) {
+        this.oauth2ClientContext = oauth2ClientContext;
+        this.authService = authService;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .antMatcher("/**")
                 .authorizeRequests()
-                .antMatchers("/", "/login**", "/webjars/**")
-                .permitAll()
+                .antMatchers("/", "/login**", "/webjars/**").permitAll()
+                .antMatchers("/invite/**", "/pay/**", "/groups/**").hasAuthority(Role.USER.getAuthority())
+                .antMatchers("/actuator/**", "/admin/**").hasAuthority(Role.ADMIN.getAuthority())
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -67,6 +72,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/invite"))
                 .and()
                 .logout()
+                .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
                 .permitAll()
                 .and()
@@ -93,9 +99,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public FilterRegistrationBean oauth2ClientFilterRegistration(
+    public FilterRegistrationBean<OAuth2ClientContextFilter> oauth2ClientFilterRegistration(
             OAuth2ClientContextFilter filter) {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
+        FilterRegistrationBean<OAuth2ClientContextFilter> registration = new FilterRegistrationBean<>();
         registration.setFilter(filter);
         registration.setOrder(-100);
         return registration;
@@ -128,9 +134,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     private Filter ssoFilter() {
-        VkCustomFilter vkFilter = new VkCustomFilter(authService);
         OAuth2RestTemplate vkTemplate = new OAuth2RestTemplate(vkAuth(), oauth2ClientContext);
-        vkFilter.setRestTemplate(vkTemplate);
+        VkCustomFilter vkFilter = new VkCustomFilter(authService, vkTemplate);
         return vkFilter;
     }
 }

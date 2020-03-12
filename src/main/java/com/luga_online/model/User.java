@@ -1,10 +1,15 @@
 package com.luga_online.model;
 
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -12,9 +17,8 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper = true)
 
-public class User {
+public class User implements Serializable {
 
     @Id
     @Column(name = "vk_id", nullable = false, unique = true)
@@ -36,4 +40,17 @@ public class User {
 
     private boolean banned;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<ExcludeGroup> excludeGroups;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "vkId=" + vkId +
+                ", role=" + role +
+                ", tel='" + tel + '\'' +
+                ", money=" + money +
+                ", banned=" + banned +
+                '}';
+    }
 }
