@@ -23,6 +23,9 @@ public class Group implements Serializable {
     @Range(min = 1)
     private Integer groupId;
 
+    @Range(min = 1)
+    private long price;
+
     @Column(name = "limit_invited")
     @Range(min = 0)
     private Integer limitInvited;
@@ -32,4 +35,17 @@ public class Group implements Serializable {
     private Integer allInvited;
 
     private boolean active;
+
+    private String cities;
+
+    private Integer sex;
+
+    @Column(name = "min_Age")
+    @Range(min = 12, max = 86)
+    private Integer minAge;
+
+    @Column(name = "max_Age")
+    @Range(min = 12, max = 86)
+    private Integer maxAge;
+
 }

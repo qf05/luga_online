@@ -23,14 +23,13 @@ public class User implements Serializable {
     @Id
     @Column(name = "vk_id", nullable = false, unique = true)
     @Range(min = 1)
-//    @OneToMany(targetEntity = )
     private Integer vkId;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private Role role;
 
-    @Column(name = "tel")//, nullable = false)
+    @Column(name = "tel")
 //    @NotEmpty
 //    @Size(max = 18, min = 18)
     private String tel;
@@ -40,7 +39,7 @@ public class User implements Serializable {
 
     private boolean banned;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<ExcludeGroup> excludeGroups;
 
     @Override

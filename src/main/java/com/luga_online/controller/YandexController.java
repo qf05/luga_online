@@ -71,10 +71,9 @@ public class YandexController {
     public String payMeTestPay(String token) throws Exception {
         if (token == null) {
             client.setAccessToken(YANDEX_TOKEN);
+        } else {
+            client.setAccessToken(token);
         }
-//        else {
-//            client.setAccessToken(token);
-//        }
 
         AccountInfo info = client.execute(new AccountInfo.Request());
         System.out.println(info.balance);

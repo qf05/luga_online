@@ -18,11 +18,6 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 public class ExcludeGroup extends AbstractPersistable<Integer> implements Serializable {
 
-//    @Column(name = "user_id", nullable = false)
-//    @Range(min = 1)
-////    @ManyToOne(targetEntity = User.class, fetch= FetchType.LAZY, cascade = CascadeType.REMOVE)
-//    private Integer userId;
-
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore

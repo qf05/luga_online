@@ -17,18 +17,19 @@ import java.io.Serializable;
 @ToString(callSuper = true)
 public class Invite extends AbstractPersistable<Integer> implements Serializable {
 
-//    @Column(name = "user_id", nullable = false)
-//    @Range(min = 1)
-////    @ManyToOne(targetEntity = User.class, fetch= FetchType.LAZY, cascade = CascadeType.REMOVE)
-//    private Integer userId;
-
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Column(name = "group_id", nullable = false)
+    private int groupId;
+
     @Column(name = "invited_id", nullable = false)
     @Range(min = 1)
     private int invitedId;
+
+    @Column(name = "result", nullable = false)
+    private int result;
 
     @Column(name = "invite_time", nullable = false)
     private long time;

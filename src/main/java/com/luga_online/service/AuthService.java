@@ -2,12 +2,9 @@ package com.luga_online.service;
 
 import com.luga_online.model.AuthUser;
 import com.luga_online.model.User;
-import com.vk.api.sdk.client.VkApiClient;
+import com.luga_online.util.VkQueries;
 import com.vk.api.sdk.client.actors.UserActor;
-import com.vk.api.sdk.exceptions.ApiException;
-import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.objects.users.UserXtrCounters;
-import com.vk.api.sdk.queries.users.UserField;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,18 +19,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
 
+import static com.luga_online.util.Utils.getUserVkName;
+
 @Service
 @Slf4j
 public class AuthService {
 
     private final UserService userService;
 
-    private final VkApiClient vk;
-
     @Autowired
-    public AuthService(UserService userService, VkApiClient vk) {
+    public AuthService(UserService userService) {
         this.userService = userService;
-        this.vk = vk;
     }
 
     public Authentication setAuthorized(OAuth2AccessToken accessToken, HttpServletRequest request) {
@@ -49,15 +45,9 @@ public class AuthService {
         String name;
         String photo;
         UserActor actor = new UserActor(user.getVkId(), token);
-        UserXtrCounters userInfo = null;
-        try {
-            userInfo = vk.users().get(actor).fields(UserField.PHOTO_50, UserField.PHOTO_100).execute().get(0);
-        } catch (ApiException | ClientException e) {
-            e.printStackTrace();
-        }
-
+        UserXtrCounters userInfo = VkQueries.getUserInfo(actor);
         if (userInfo != null) {
-            name = userInfo.getFirstName() + " " + userInfo.getLastName();
+            name = getUserVkName(userInfo);
             photo = userInfo.getPhoto50();
             if (photo == null) {
                 photo = userInfo.getPhoto100();
