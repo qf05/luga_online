@@ -20,27 +20,40 @@ public class InviteService {
 
     private final InviteRepository inviteRepository;
     private final UserService userService;
+    private final GroupService groupService;
 
     @Autowired
-    public InviteService(InviteRepository inviteRepository, UserService userService) {
+    public InviteService(InviteRepository inviteRepository, UserService userService, GroupService groupService) {
         this.inviteRepository = inviteRepository;
         this.userService = userService;
+        this.groupService = groupService;
     }
 
     @Transactional
-    public Map<Group, String> invite(AuthUser user, Integer friendId, List<Group> groups) {
-        Map<Group, String> result = new HashMap<>();
+    public Map<Integer, String> invite(AuthUser user, Integer friendId, List<Group> groups) {
+        Map<Integer, String> result = new HashMap<>();
         for (Group group : groups) {
-            Object[] objects = VkQueries.inviteFriendToGroup(user, friendId, group.getGroupId());
-            Integer resultCode = (Integer) objects[0];
-            String message = (String) objects[1];
-            result.put(group, message);
-            if (resultCode == 1) {
-                User userDB = user.getUser();
-                userDB.setMoney(userDB.getMoney() + group.getPrice());
-                userService.updateUser(userDB);
+            if (group.isActive() && group.getLimitInvited() > 0) {
+                Object[] objects = VkQueries.inviteFriendToGroup(user, friendId, group.getGroupId());
+                Integer resultCode = (Integer) objects[0];
+                String message = (String) objects[1];
+                result.put(group.getGroupId(), message);
+                if (resultCode == 1) {
+                    User userDB = user.getUser();
+                    userDB.setMoney(userDB.getMoney() + group.getPrice());
+                    userService.updateUser(userDB);
+                    user.setUser(userDB);
+                    group.setAllInvited(group.getAllInvited() + 1);
+                    group.setLimitInvited(group.getLimitInvited() - 1);
+                    if (group.getLimitInvited() < 1) {
+                        group.setActive(false);
+                    }
+                    groupService.updateGroup(group);
+                }
+                inviteRepository.save(new Invite(user.getUser(), group.getGroupId(), friendId, resultCode, Calendar.getInstance().getTimeInMillis()));
+            } else {
+                result.put(group.getGroupId(), "Limit invite to this group");
             }
-            inviteRepository.save(new Invite(user.getUser(), group.getGroupId(), friendId, resultCode, Calendar.getInstance().getTimeInMillis()));
         }
         return result;
     }

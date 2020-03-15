@@ -1,7 +1,10 @@
 package com.luga_online.controller;
 
 import com.luga_online.model.AuthUser;
+import com.luga_online.model.Group;
 import com.luga_online.service.FriendUtils;
+import com.luga_online.service.GroupService;
+import com.luga_online.service.InviteService;
 import com.luga_online.to.FriendTo;
 import com.luga_online.to.UserTo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(InviteController.REST_URL)
@@ -21,10 +25,14 @@ public class InviteController {
     static final String REST_URL = "/invite";
 
     private final FriendUtils friendUtils;
+    private final GroupService groupService;
+    private final InviteService inviteService;
 
     @Autowired
-    public InviteController(FriendUtils friendUtils) {
+    public InviteController(FriendUtils friendUtils, GroupService groupService, InviteService inviteService) {
         this.friendUtils = friendUtils;
+        this.groupService = groupService;
+        this.inviteService = inviteService;
     }
 
     @GetMapping(value = "/getFriends", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -38,6 +46,13 @@ public class InviteController {
         return new UserTo(user.getUserName(), user.getPhoto(), String.format("%.2f", money));
 //        return new UserTo(user.getUserName(), null, String.format("%.2f", money));
     }
+
+    @GetMapping(value = "/invite", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Map<Integer, String> invite(@AuthenticationPrincipal AuthUser user, Integer friendId, List<Integer> groupsId) {
+        List<Group> groups = groupService.getGroupsById(groupsId);
+        return inviteService.invite(user, friendId, groups);
+    }
+
 
     @GetMapping(value = "/text")
     public String testUTF() {

@@ -22,12 +22,20 @@ public class GroupService {
         this.repository = repository;
     }
 
-    public List<Group> getGroups() {
+    public List<Group> getAllGroups() {
         return repository.findAll();
     }
 
+    public List<Group> getGroupsById(List<Integer> groupsId) {
+        return repository.findAllById(groupsId);
+    }
+
+    public void updateGroup(Group group) {
+        repository.save(group);
+    }
+
     public List<Group> getFilterGroups(User user) {
-        List<Group> groups = getGroups();
+        List<Group> groups = getAllGroups();
         List<Integer> excludeGroupsId = user.getExcludeGroups()
                 .stream()
                 .map(ExcludeGroup::getExcludeGroupId)

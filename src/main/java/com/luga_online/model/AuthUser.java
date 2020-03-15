@@ -3,11 +3,13 @@ package com.luga_online.model;
 import com.vk.api.sdk.client.actors.UserActor;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
 
 @Getter
+@Setter
 @ToString
 @AllArgsConstructor
 public class AuthUser implements Serializable {
