@@ -273,7 +273,7 @@ public class FriendUtils {
     private void prepareTransformFriends(Group group, List<UserXtrCounters> listForTransform, Map<UserXtrCounters, List<Group>> mapForTransform) {
         listForTransform.forEach(i -> {
             List<Group> groups = mapForTransform.get(i);
-            if (group == null) {
+            if (groups == null) {
                 groups = new ArrayList<>();
             }
             groups.add(group);
