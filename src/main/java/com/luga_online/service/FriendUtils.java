@@ -4,6 +4,7 @@ import com.luga_online.model.AuthUser;
 import com.luga_online.model.Group;
 import com.luga_online.model.Invite;
 import com.luga_online.to.FriendTo;
+import com.luga_online.util.Utils;
 import com.luga_online.util.VkQueries;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.exceptions.ApiException;
@@ -85,7 +86,7 @@ public class FriendUtils {
             List<UserXtrCounters> filterGroupMembers = filterGroupMembers(user, filterToGroupFriends, group.getGroupId());
             prepareTransformFriends(group, filterGroupMembers, mapForTransform);
         }
-        return transformFriends(mapForTransform);
+        return transformFriends(mapForTransform, user);
     }
 
 
@@ -163,7 +164,7 @@ public class FriendUtils {
             }
             if (groups.size() > 0) {
                 String name = i.getFirstName() + " " + i.getLastName();
-                return new FriendTo(i.getId(), i.getPhoto50(), name, groups);
+                return new FriendTo(i.getId(), i.getPhoto50(), name, Utils.convertGroupsToGroupsTo(user, groups));
             } else return null;
         }).filter(Objects::nonNull)
                 .collect(Collectors.toList());
@@ -214,7 +215,7 @@ public class FriendUtils {
             List<UserXtrCounters> filterFriends = filterGroupMembers(user, wasInviteFilterFriends, group.getGroupId());
             prepareTransformFriends(group, filterFriends, mapForTransform);
         }
-        return transformFriends(mapForTransform);
+        return transformFriends(mapForTransform, user);
     }
 
     private int getYearOld(DateFormat format, UserXtrCounters friend, int yearNow) {
@@ -280,30 +281,30 @@ public class FriendUtils {
         });
     }
 
-    private List<FriendTo> transformFriends(Map<UserXtrCounters, List<Group>> mapForTransform) {
+    private List<FriendTo> transformFriends(Map<UserXtrCounters, List<Group>> mapForTransform, AuthUser user) {
         return mapForTransform.entrySet().stream()
                 .map(entry -> new FriendTo(
                         entry.getKey().getId(),
                         entry.getKey().getPhoto50(),
                         getUserVkName(entry.getKey()),
-                        entry.getValue())
+                        Utils.convertGroupsToGroupsTo(user, entry.getValue()))
                 ).collect(Collectors.toList());
     }
 
-    private List<FriendTo> transformFriends2(Map<Group, Set<UserXtrCounters>> mapForTransform) {
-        Set<UserXtrCounters> values = mapForTransform.values().stream().flatMap(Collection::stream).collect(Collectors.toSet());
-        return values.stream().map(i -> {
-            List<Group> groups = new ArrayList<>();
-            for (Group group : mapForTransform.keySet()) {
-                if (mapForTransform.get(group).contains(i)) {
-                    groups.add(group);
-                }
-            }
-            if (groups.size() > 0) {
-                String name = i.getFirstName() + " " + i.getLastName();
-                return new FriendTo(i.getId(), i.getPhoto50(), name, groups);
-            } else return null;
-        }).filter(Objects::nonNull)
-                .collect(Collectors.toList());
-    }
+//    private List<FriendTo> transformFriends2(Map<Group, Set<UserXtrCounters>> mapForTransform) {
+//        Set<UserXtrCounters> values = mapForTransform.values().stream().flatMap(Collection::stream).collect(Collectors.toSet());
+//        return values.stream().map(i -> {
+//            List<Group> groups = new ArrayList<>();
+//            for (Group group : mapForTransform.keySet()) {
+//                if (mapForTransform.get(group).contains(i)) {
+//                    groups.add(group);
+//                }
+//            }
+//            if (groups.size() > 0) {
+//                String name = i.getFirstName() + " " + i.getLastName();
+//                return new FriendTo(i.getId(), i.getPhoto50(), name, groups);
+//            } else return null;
+//        }).filter(Objects::nonNull)
+//                .collect(Collectors.toList());
+//    }
 }

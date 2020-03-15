@@ -7,6 +7,7 @@ import com.luga_online.service.GroupService;
 import com.luga_online.service.InviteService;
 import com.luga_online.to.FriendTo;
 import com.luga_online.to.UserTo;
+import com.luga_online.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.MediaType;
@@ -42,9 +43,8 @@ public class InviteController {
 
     @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserTo userInfo(@AuthenticationPrincipal AuthUser user) {
-        double money = (double) user.getUser().getMoney() / 100;
-        return new UserTo(user.getUserName(), user.getPhoto(), String.format("%.2f", money));
-//        return new UserTo(user.getUserName(), null, String.format("%.2f", money));
+        return new UserTo(user.getUserName(), user.getPhoto(), Utils.convertMoney(user.getUser().getMoney()));
+//        return new UserTo(user.getUserName(), null, Utils.convertMoney(user.getUser().getMoney()));
     }
 
     @GetMapping(value = "/invite", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
