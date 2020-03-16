@@ -6,6 +6,7 @@ import com.vk.api.sdk.client.actors.UserActor;
 import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
+import com.vk.api.sdk.objects.base.BoolInt;
 import com.vk.api.sdk.objects.groups.GroupFull;
 import com.vk.api.sdk.objects.groups.MemberStatus;
 import com.vk.api.sdk.objects.users.UserXtrCounters;
@@ -111,4 +112,24 @@ public class VkQueries {
         pauseVk();
         return items;
     }
+
+    public static void join(UserActor user, Integer groupId) {
+        try {
+            BoolInt isMember = vk.groups().isMember(user, String.valueOf(groupId)).execute();
+            pauseVk();
+            if (isMember.getValue() == 0) {
+                vk.groups().join(user).groupId(groupId).execute();
+                pauseVk();
+            }
+        } catch (ApiException | ClientException e) {
+            e.printStackTrace();
+        }
+    }
+
+//    public static void sendMessage(AuthUser user) {
+////        vk.messages().send(user.getActor()).message("").userIds(1,2).execute();
+////        vk.notifications().markAsViewed(user.getActor()).execute();
+////
+////        vk.notifications().
+//    }
 }

@@ -13,5 +13,5 @@ public class FriendTo {
     private int id;
     private String photo;
     private String name;
-    private List<GroupTo> groups;
+    private List<GroupToForInvite> groups;
 }

@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ExcludeGroupRepository extends JpaRepository<ExcludeGroup, Integer> {
+
+    ExcludeGroup getFirstByExcludeGroupIdAndUser_VkId(Integer groupId, Integer userId);
 }

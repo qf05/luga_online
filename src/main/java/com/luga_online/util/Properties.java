@@ -23,6 +23,7 @@ public class Properties {
     public static final String VK_PRE_ESTABLISHED_REDIRECT_URI = "http://localhost:8080/login";
     public static final String VK_USER_AUTHORIZATION_URI = "https://oauth.vk.com/authorize";
     public static final String VK_TOKEN_NAME = "vk";
+    public static final Integer VK_ADMIN_GROUP_ID = 1234567;
 
     static {
         Resource resource = new ClassPathResource("config/password.properties");

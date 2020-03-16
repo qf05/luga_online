@@ -10,7 +10,6 @@ import com.yandex.money.api.methods.wallet.AccountInfo;
 import com.yandex.money.api.model.Scope;
 import com.yandex.money.api.net.clients.ApiClient;
 import com.yandex.money.api.net.clients.DefaultApiClient;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -21,7 +20,6 @@ import static com.luga_online.util.Properties.*;
 import static com.yandex.money.api.model.Scope.*;
 
 @Controller
-@EnableAutoConfiguration
 public class YandexController {
 
     private ApiClient client = new DefaultApiClient.Builder()

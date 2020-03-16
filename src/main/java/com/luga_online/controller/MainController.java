@@ -1,11 +1,9 @@
 package com.luga_online.controller;
 
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-@EnableAutoConfiguration
 public class MainController {
 
     @GetMapping("/")
@@ -16,6 +14,11 @@ public class MainController {
     @GetMapping("/invite")
     public String invite() {
         return "invite";
+    }
+
+    @GetMapping("/groups")
+    public String groups() {
+        return "groups";
     }
 
 

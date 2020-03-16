@@ -1,7 +1,7 @@
-INSERT INTO USERS (VK_ID, ROLE, TEL, MONEY, BANNED)
-VALUES (123, 'USER', '+7 (900) 123-45-67', 0, false),
-       (111, 'ADMIN', '+7 (921) 123-45-67', 123, false),
-       (115, 'USER2', '+7 (906) 123-45-67', 2, false);
+INSERT INTO USERS (VK_ID, ROLE, TEL, MONEY, ALLOW_MESSAGES, BANNED)
+VALUES (123, 'USER', '+7 (900) 123-45-67', 0, false, false),
+       (111, 'ADMIN', '+7 (921) 123-45-67', 123, false, false),
+       (115, 'USER2', '+7 (906) 123-45-67', 2, false, false);
 
 INSERT INTO PAY (USER_ID, MONEY, PAY_TIME)
 VALUES (123, 5, 12345678),
@@ -17,4 +17,4 @@ VALUES (123, 1234, 12377, 1, 123434567),
        (111, 4321, 12777, 1, 163434567);
 
 INSERT INTO GROUPS (GROUP_ID, PRICE, LIMIT_INVITED, ALL_INVITED, ACTIVE, CITIES, SEX, MIN_AGE, MAX_AGE)
-VALUES (90800156, 50, 5, 0, true, 'Луга,Скреблово', null, null, null);
+VALUES (90800156, 50, 1, 0, true, 'Луга,Скреблово', null, null, null);

@@ -23,7 +23,7 @@ public class UserService {
     }
 
     public User createUser(Integer id) {
-        return repository.save(new User(id, Role.USER, null, 0, false, null));
+        return repository.save(new User(id, Role.USER, null, 0, false, false, null));
     }
 
     public void updateUser(User user) {

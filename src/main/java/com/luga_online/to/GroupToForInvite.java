@@ -7,10 +7,9 @@ import lombok.*;
 @EqualsAndHashCode
 @Getter
 @Setter
-public class GroupTo {
+public class GroupToForInvite {
     private int id;
     private String name;
     private String photo;
-    private String price;
-    private boolean active;
+    private String message;
 }

@@ -37,6 +37,9 @@ public class User implements Serializable {
     @Column(name = "money", nullable = false)
     private long money;
 
+    @Column(name = "allow_messages", nullable = false)
+    private boolean allowMessages;
+
     private boolean banned;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")

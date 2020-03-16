@@ -2,12 +2,11 @@ package com.luga_online.util;
 
 import com.luga_online.model.AuthUser;
 import com.luga_online.model.Group;
-import com.luga_online.to.GroupTo;
+import com.luga_online.to.GroupToForInvite;
 import com.vk.api.sdk.objects.groups.GroupFull;
 import com.vk.api.sdk.objects.users.UserXtrCounters;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Utils {
@@ -29,15 +28,14 @@ public class Utils {
     }
 
     //не более 500 групп
-    public static List<GroupTo> convertGroupsToGroupsTo(AuthUser user, List<Group> groups) {
+    public static List<GroupToForInvite> convertGroupsToGroupsTo(AuthUser user, List<Group> groups) {
         List<String> groupsId = groups.stream().map(i -> String.valueOf(i.getGroupId())).collect(Collectors.toList());
-        Map<Integer, String> priceMap = groups.stream().collect(Collectors.toMap(Group::getGroupId, i -> convertMoney(i.getPrice())));
+//        Map<Integer, String> priceMap = groups.stream().collect(Collectors.toMap(Group::getGroupId, i -> convertMoney(i.getPrice())));
         List<GroupFull> groupFulls = VkQueries.getGroups(user, groupsId);
         return groupFulls.stream()
                 .map(i -> {
                     int id = Integer.parseInt(i.getId());
-                    return new GroupTo(id, i.getName(), priceMap.get(id), i.getPhoto50());
+                    return new GroupToForInvite(id, i.getName(), i.getPhoto50(), null);
                 }).collect(Collectors.toList());
-
     }
 }

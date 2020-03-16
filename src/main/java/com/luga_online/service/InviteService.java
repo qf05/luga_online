@@ -5,6 +5,7 @@ import com.luga_online.model.Group;
 import com.luga_online.model.Invite;
 import com.luga_online.model.User;
 import com.luga_online.repository.InviteRepository;
+import com.luga_online.to.GroupToForInvite;
 import com.luga_online.util.VkQueries;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,33 +30,23 @@ public class InviteService {
         this.groupService = groupService;
     }
 
-    @Transactional
-    public Map<Integer, String> invite(AuthUser user, Integer friendId, List<Group> groups) {
-        Map<Integer, String> result = new HashMap<>();
+    public List<GroupToForInvite> invite(AuthUser user, Integer friendId, List<GroupToForInvite> groupsTo) {
+        List<Integer> groupsId = groupsTo.stream().map(GroupToForInvite::getId).collect(Collectors.toList());
+        Map<Integer, GroupToForInvite> groupsToIdMap = groupsTo.stream().collect(Collectors.toMap(GroupToForInvite::getId, i -> i));
+        List<Group> groups = groupService.getGroupsById(groupsId);
+        String message = "";
         for (Group group : groups) {
             if (group.isActive() && group.getLimitInvited() > 0) {
                 Object[] objects = VkQueries.inviteFriendToGroup(user, friendId, group.getGroupId());
                 Integer resultCode = (Integer) objects[0];
-                String message = (String) objects[1];
-                result.put(group.getGroupId(), message);
-                if (resultCode == 1) {
-                    User userDB = user.getUser();
-                    userDB.setMoney(userDB.getMoney() + group.getPrice());
-                    userService.updateUser(userDB);
-                    user.setUser(userDB);
-                    group.setAllInvited(group.getAllInvited() + 1);
-                    group.setLimitInvited(group.getLimitInvited() - 1);
-                    if (group.getLimitInvited() < 1) {
-                        group.setActive(false);
-                    }
-                    groupService.updateGroup(group);
-                }
-                inviteRepository.save(new Invite(user.getUser(), group.getGroupId(), friendId, resultCode, Calendar.getInstance().getTimeInMillis()));
+                message = (String) objects[1];
+                saveResultInvite(resultCode, group, user, friendId);
             } else {
-                result.put(group.getGroupId(), "Limit invite to this group");
+                message = "Limit invite to this group";
             }
+            groupsToIdMap.get(group.getGroupId()).setMessage(message);
         }
-        return result;
+        return new ArrayList<>(groupsToIdMap.values());
     }
 
     public Set<Integer> getInvitesToGroup(Integer userId, Integer groupID) {
@@ -65,6 +56,24 @@ public class InviteService {
 
     public List<Invite> getUserInvites(Integer userId) {
         return inviteRepository.getAllByUserVkId(userId);
+    }
+
+    @Transactional
+    void saveResultInvite(Integer resultCode, Group group, AuthUser user, Integer friendId) {
+        if (resultCode == 1) {
+            User userDB = user.getUser();
+            userDB.setMoney(userDB.getMoney() + group.getPrice());
+            userService.updateUser(userDB);
+            user.setUser(userDB);
+            group.setAllInvited(group.getAllInvited() + 1);
+            group.setLimitInvited(group.getLimitInvited() - 1);
+            if (group.getLimitInvited() < 1) {
+                group.setActive(false);
+            }
+            groupService.updateGroup(group);
+        }
+        inviteRepository.save(new Invite(user.getUser(), group.getGroupId(), friendId, resultCode, Calendar.getInstance().getTimeInMillis()));
+
     }
 
 //    @Autowired
