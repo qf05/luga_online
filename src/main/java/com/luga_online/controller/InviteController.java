@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 @RestController
 @RequestMapping(InviteController.REST_URL)
@@ -24,6 +26,7 @@ public class InviteController {
 
     private final FriendsService friendUtils;
     private final InviteService inviteService;
+    private static Set<AuthUser> userSet = new CopyOnWriteArraySet<>();
 
     @Autowired
     public InviteController(FriendsService friendUtils, GroupService groupService, InviteService inviteService) {
@@ -44,7 +47,13 @@ public class InviteController {
 
     @GetMapping(value = "/invite", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public List<GroupToForInvite> invite(@AuthenticationPrincipal AuthUser user, Integer friendId, List<GroupToForInvite> groupsTo) {
-        return inviteService.invite(user, friendId, groupsTo);
+        if (userSet.contains(user)) {
+            return groupsTo;
+        }
+        userSet.add(user);
+        List<GroupToForInvite> result = inviteService.invite(user, friendId, groupsTo);
+        userSet.remove(user);
+        return result;
     }
 
     @GetMapping(value = "/text")

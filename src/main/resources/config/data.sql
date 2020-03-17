@@ -3,11 +3,11 @@ VALUES (123, 'USER', '+7 (900) 123-45-67', 0, false, false),
        (111, 'ADMIN', '+7 (921) 123-45-67', 123, false, false),
        (115, 'USER2', '+7 (906) 123-45-67', 2, false, false);
 
-INSERT INTO PAY (USER_ID, MONEY, PAY_TIME)
-VALUES (123, 5, 12345678),
-       (115, 3, 87656321),
-       (115, 4, 87676721),
-       (123, 1, 87654321);
+INSERT INTO PAY (USER_ID, MONEY, RESULT, PAY_TIME)
+VALUES (123, 5, 'OK! eee', 12345678),
+       (115, 3, 'OK! aaa', 87656321),
+       (115, 4, 'error', 87776721),
+       (123, 1, 'unKnow', 88654321);
 
 INSERT INTO INVITE (USER_ID, GROUP_ID, INVITED_ID, RESULT, INVITE_TIME)
 VALUES (123, 1234, 12377, 1, 123434567),

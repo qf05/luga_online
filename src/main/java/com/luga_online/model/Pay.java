@@ -23,6 +23,9 @@ public class Pay extends AbstractPersistable<Integer> implements Serializable {
     @Column(name = "money", nullable = false)
     private long money;
 
+    @Column(name = "result", nullable = false)
+    private String result;
+
     @Column(name = "pay_time", nullable = false)
     private long time;
 }
