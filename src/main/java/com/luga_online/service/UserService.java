@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Slf4j
 public class UserService {
@@ -28,5 +30,20 @@ public class UserService {
 
     public void updateUser(User user) {
         repository.save(user);
+    }
+
+    public List<User> getAllUsers() {
+        return repository.findAll();
+    }
+
+    public User getUser(Integer userId) {
+        if (userId == null) {
+            return null;
+        }
+        return repository.findById(userId).orElse(null);
+    }
+
+    public void removeUser(Integer userId) {
+        repository.deleteById(userId);
     }
 }

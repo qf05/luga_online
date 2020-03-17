@@ -27,6 +27,10 @@ public class PayService {
         this.payRepository = payRepository;
     }
 
+    public List<Pay> getAllPays() {
+        return payRepository.findAll();
+    }
+
     public void setPhone(User user, String phone) {
         user.setTel(phone);
         userService.updateUser(user);
@@ -35,6 +39,10 @@ public class PayService {
     public List<Pay> getHistoryPay(Integer userId) {
         List<Pay> pays = payRepository.getAllByUserVkIdOrderByTimeDesc(userId);
         return pays.stream().filter(i -> i.getResult().contains("OK!")).collect(Collectors.toList());
+    }
+
+    public void removePay(Integer payId) {
+        payRepository.deleteById(payId);
     }
 
     public String pay(Integer userId, Double moneyD) {

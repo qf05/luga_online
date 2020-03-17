@@ -4,6 +4,7 @@ import com.luga_online.model.AuthUser;
 import com.luga_online.model.Pay;
 import com.luga_online.service.PayService;
 import com.luga_online.util.Utils;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,7 +48,7 @@ public class PayController {
         return result;
     }
 
-    @GetMapping(value = "/historyPay")
+    @GetMapping(value = "/historyPay", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Pay> historyPay(@AuthenticationPrincipal AuthUser user) {
         return payService.getHistoryPay(user.getId());
     }

@@ -40,17 +40,23 @@ public class GroupService {
         return repository.findAllById(groupsId);
     }
 
-    public void updateGroup(Group group) {
+    public Group getGroupById(Integer groupId) {
+        return repository.findById(groupId).orElse(null);
+    }
+
+    public void saveGroup(Group group) {
         repository.save(group);
     }
 
+    public void removeGroup(Integer groupId) {
+        repository.deleteById(groupId);
+    }
+
     public List<Group> getFilterGroups(User user) {
-        List<Group> groups = getAllGroups();
-        List<Integer> excludeGroupsId = user.getExcludeGroups()
-                .stream()
+        Set<Integer> excludeGroupsId = user.getExcludeGroups().stream()
                 .map(ExcludeGroup::getExcludeGroupId)
-                .collect(Collectors.toList());
-        return groups.stream()
+                .collect(Collectors.toSet());
+        return getAllGroups().stream()
                 .filter(Group::isActive)
                 .filter(i -> i.getLimitInvited() > 0)
                 .filter(i -> !excludeGroupsId.contains(i.getGroupId()))
@@ -62,17 +68,14 @@ public class GroupService {
                 .filter(i -> i.isActive() && i.getLimitInvited() > 0)
                 .collect(Collectors.toList());
 
-        Map<Integer, Group> groupsIdMap = groups
-                .stream()
+        Map<Integer, Group> groupsIdMap = groups.stream()
                 .collect(Collectors.toMap(Group::getGroupId, i -> i));
 
-        Set<Integer> excludeGroups = user.getUser().getExcludeGroups()
-                .stream()
+        Set<Integer> excludeGroups = user.getUser().getExcludeGroups().stream()
                 .map(ExcludeGroup::getExcludeGroupId)
                 .collect(Collectors.toSet());
 
-        List<String> groupsId = groupsIdMap.keySet()
-                .stream()
+        List<String> groupsId = groupsIdMap.keySet().stream()
                 .map(String::valueOf)
                 .collect(Collectors.toList());
 

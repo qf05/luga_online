@@ -30,11 +30,19 @@ public class InviteService {
         this.groupService = groupService;
     }
 
+    public List<Invite> getAllInvite() {
+        return inviteRepository.findAll();
+    }
+
+    public void removeInvite(Integer inviteId) {
+        inviteRepository.deleteById(inviteId);
+    }
+
     public List<GroupToForInvite> invite(AuthUser user, Integer friendId, List<GroupToForInvite> groupsTo) {
         List<Integer> groupsId = groupsTo.stream().map(GroupToForInvite::getId).collect(Collectors.toList());
         Map<Integer, GroupToForInvite> groupsToIdMap = groupsTo.stream().collect(Collectors.toMap(GroupToForInvite::getId, i -> i));
         List<Group> groups = groupService.getGroupsById(groupsId);
-        String message = "";
+        String message;
         for (Group group : groups) {
             if (group.isActive() && group.getLimitInvited() > 0) {
                 Object[] objects = VkQueries.inviteFriendToGroup(user, friendId, group.getGroupId());
@@ -70,7 +78,7 @@ public class InviteService {
             if (group.getLimitInvited() < 1) {
                 group.setActive(false);
             }
-            groupService.updateGroup(group);
+            groupService.saveGroup(group);
         }
         inviteRepository.save(new Invite(user.getUser(), group.getGroupId(), friendId, resultCode, Calendar.getInstance().getTimeInMillis()));
 

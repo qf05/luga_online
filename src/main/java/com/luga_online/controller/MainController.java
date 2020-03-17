@@ -21,6 +21,16 @@ public class MainController {
         return "groups";
     }
 
+    @GetMapping("/pay")
+    public String pay() {
+        return "pay";
+    }
+
+    @GetMapping("/admin")
+    public String admin() {
+        return "admin";
+    }
+
 
 //    @PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 //    public String mainPost(String uri) {
