@@ -65,11 +65,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 .and()
                 .formLogin()
-                .failureUrl("/")
+                .failureUrl("/3")
                 .defaultSuccessUrl("/invite", true)
                 .and()
                 .exceptionHandling()
-                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/invite"))
+                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
                 .and()
                 .logout()
                 .logoutUrl("/logout")
@@ -89,10 +89,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         details.setClientId(VK_APP_ID);
         details.setClientSecret(VK_CLIENT_SECRET);
         details.setAccessTokenUri(VK_ACCESS_TOKEN_URI);
-        details.setAuthenticationScheme(AuthenticationScheme.form);
+//        details.setAuthenticationScheme(AuthenticationScheme.form);
         details.setScope(VK_SCOPE);
         details.setClientAuthenticationScheme(AuthenticationScheme.query);
-        details.setPreEstablishedRedirectUri(VK_PRE_ESTABLISHED_REDIRECT_URI);
+//        details.setPreEstablishedRedirectUri(VK_PRE_ESTABLISHED_REDIRECT_URI);
         details.setUserAuthorizationUri(VK_USER_AUTHORIZATION_URI);
         details.setTokenName(VK_TOKEN_NAME);
         return details;
@@ -135,7 +135,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private Filter ssoFilter() {
         OAuth2RestTemplate vkTemplate = new OAuth2RestTemplate(vkAuth(), oauth2ClientContext);
-        VkCustomFilter vkFilter = new VkCustomFilter(authService, vkTemplate);
-        return vkFilter;
+        return new VkCustomFilter(authService, vkTemplate);
     }
 }

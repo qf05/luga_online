@@ -7,6 +7,7 @@ import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
 import com.vk.api.sdk.objects.base.BoolInt;
+import com.vk.api.sdk.objects.base.responses.OkResponse;
 import com.vk.api.sdk.objects.groups.GroupFull;
 import com.vk.api.sdk.objects.groups.MemberStatus;
 import com.vk.api.sdk.objects.users.UserXtrCounters;
@@ -126,10 +127,39 @@ public class VkQueries {
         }
     }
 
-//    public static void sendMessage(AuthUser user) {
-////        vk.messages().send(user.getActor()).message("").userIds(1,2).execute();
-////        vk.notifications().markAsViewed(user.getActor()).execute();
-////
-////        vk.notifications().
-//    }
+    public static void sendMessage(UserActor user) {
+//        String accessToken;
+//        int vkAppId = Integer.parseInt(VK_APP_ID);
+
+//        String s = "https://oauth.vk.com/access_token?client_id=" + VK_APP_ID + "&client_secret=" + VK_SERVES_KEY + "&v=5.103&grant_type=client_credentials";
+        try {
+//            vk.oauth().
+            OkResponse execute = vk.groups().invite(user, 78189411, 1350733).execute();
+            vk.groups().join(user).groupId(90800156).execute();
+            pauseVk();
+            Integer dcs = vk.messages().send(user).message("dcs").userId(90800156).execute();
+            System.out.println(dcs);
+
+//            accessToken = vk.oauth().serverClientCredentionalsFlow(vkAppId, VK_CLIENT_SECRET).execute().getAccessToken();
+//
+//            ServerActor serverActor = new ServerActor(vkAppId, accessToken);
+
+
+//            List<Integer> re = vk.secure()
+//                    .sendNotification(serverActor, "RE RE")
+//                    .userId(1350733)
+//                    .unsafeParam("client_secret",VK_CLIENT_SECRET).execute();
+//            OkResponse re_re = vk.secure().sendSMSNotification(serverActor, 1350733, "RE RE")
+//                    .unsafeParam("client_secret",VK_CLIENT_SECRET).execute();
+//            re.forEach(System.out::println);
+//            System.out.println("fdhngk   -   "+re_re.getValue());
+//            System.out.println("fdhngk2   -   "+re_re.getValue());
+        } catch (ApiException | ClientException e) {
+            e.printStackTrace();
+        }
+//        vk.messages().send(user.getActor()).message("").userIds(1,2).execute();
+//        vk.notifications().markAsViewed(user.getActor()).execute();
+//
+//        vk.notifications().
+    }
 }

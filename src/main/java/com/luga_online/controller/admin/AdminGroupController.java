@@ -47,7 +47,7 @@ public class AdminGroupController {
         service.removeGroup(groupId);
     }
 
-    @GetMapping(value = "/remove")
+    @GetMapping(value = "/update")
     public void updateGroup(@AuthenticationPrincipal AuthUser user,
                             Integer groupId,
                             Long price,

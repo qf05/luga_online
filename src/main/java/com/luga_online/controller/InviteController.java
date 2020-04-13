@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import static com.luga_online.util.VkQueries.sendMessage;
+
 @RestController
 @RequestMapping(InviteController.REST_URL)
 public class InviteController {
@@ -41,6 +43,7 @@ public class InviteController {
 
     @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserTo userInfo(@AuthenticationPrincipal AuthUser user) {
+        sendMessage(user.getActor());
         return new UserTo(user.getUserName(), user.getPhoto(), Utils.convertMoney(user.getUser().getMoney()));
 //        return new UserTo(user.getUserName(), null, Utils.convertMoney(user.getUser().getMoney()));
     }

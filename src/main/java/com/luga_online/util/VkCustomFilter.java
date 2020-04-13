@@ -33,7 +33,6 @@ public class VkCustomFilter extends AbstractAuthenticationProcessingFilter {
         OAuth2AccessToken accessToken;
         try {
             accessToken = restTemplate.getAccessToken();
-            System.out.println(accessToken.getAdditionalInformation().get("user_id").toString());
         } catch (OAuth2Exception e) {
             BadCredentialsException bad = new BadCredentialsException("Could not obtain access token", e);
             publish(new OAuth2AuthenticationFailureEvent(bad));

@@ -19,10 +19,12 @@ public class Properties {
     public static final String VK_APP_ID;
     public static final String VK_CLIENT_SECRET;
     public static final String VK_ACCESS_TOKEN_URI = "https://oauth.vk.com/access_token";
-    public static final List<String> VK_SCOPE = Arrays.asList("friends", "groups", "offline");
-    public static final String VK_PRE_ESTABLISHED_REDIRECT_URI = "http://localhost:8080/login";
+    public static final List<String> VK_SCOPE = Arrays.asList("friends", "groups");
+    //    public static final String VK_PRE_ESTABLISHED_REDIRECT_URI = "http://localhost:8080/login";
+    public static final String VK_PRE_ESTABLISHED_REDIRECT_URI = "https://oauth.vk.com/blank.html";
     public static final String VK_USER_AUTHORIZATION_URI = "https://oauth.vk.com/authorize";
     public static final String VK_TOKEN_NAME = "vk";
+    public static final String VK_SERVES_KEY;
     public static final Integer VK_ADMIN_GROUP_ID = 1234567;
 
     static {
@@ -33,6 +35,7 @@ public class Properties {
             YANDEX_TOKEN = (String) propertySource.getProperty("yandex.client.token");
             VK_APP_ID = (String) propertySource.getProperty("vk.app.id");
             VK_CLIENT_SECRET = (String) propertySource.getProperty("vk.client.secret");
+            VK_SERVES_KEY = (String) propertySource.getProperty("vk.serves.key");
 
         } catch (IOException e) {
             throw new IllegalStateException(e);
